@@ -34,9 +34,7 @@ app.get('/blogs', (req, res) => {
 })
 
 // NEW ROUTE
-app.get('/blogs/new', (req, res) => {
-    res.render('new')
-})
+app.get('/blogs/new', (req, res) => res.render('new'))
 
 // CREATE ROUTE
 app.post('/blogs', (req, res) => {
@@ -45,6 +43,17 @@ app.post('/blogs', (req, res) => {
             res.render('new')
         } else {
             res.redirect('/blogs')
+        }
+    })
+})
+
+// SHOW ROUTE
+app.get('/blogs/:id', (req, res) => {
+    Blog.findById(req.params.id, (err, foundBlog) => {
+        if (err) {
+            res.redirect('/blogs')
+        } else {
+            res.render('show', {blog: foundBlog})
         }
     })
 })
